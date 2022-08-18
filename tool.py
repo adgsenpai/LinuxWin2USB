@@ -90,7 +90,7 @@ if __name__ == '__main__':
                 if selection == 'y':
                     # delete existing windows11.iso      
                     CleanWorkspace()                                                              
-                    DownloadWindows11()\            
+                    DownloadWindows11()            
             create_bootable_usb_windows(USBDrive)
             print('Windows 11 bootable USB successfully created on ' + USBDrive)
         else:
