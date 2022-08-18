@@ -11,7 +11,7 @@ def get_removable_drives_linux():
     usbdevices = []
     for line in subprocess.check_output(['lsblk', '-o', 'NAME,MOUNTPOINT']).decode('utf-8').split('\n'):
         if 'sd' in line:
-            usbdevices.append(line.split()[0])
+            usbdevices.append('/dev/'+line.split()[0])                            
     return usbdevices
         
 def create_bootable_usb_windows(USBDrive):
