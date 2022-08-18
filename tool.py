@@ -17,20 +17,20 @@ def get_removable_drives_linux():
 def create_bootable_usb_windows(USBDrive):
     # Create a new USB drive
     print('Creating USB drive...')
-    subprocess.call(['mkfs.ntfs', '-F', '-I', '-L', 'Windows11', USBDrive])
+    subprocess.call(['sudo','mkfs.ntfs', '-F', '-I', '-L', 'Windows11', USBDrive])
     print('USB drive created successfully.')
     # Mount the USB drive
     print('Mounting USB drive...')
-    subprocess.call(['mount', USBDrive, '-t', 'ntfs', '-o', 'rw'])
+    subprocess.call(['sudo','mount', USBDrive, '-t', 'ntfs', '-o', 'rw'])
     print('USB drive mounted successfully.')
     # Copy the ISO to the USB drive
     print('Copying ISO to USB drive...')    
-    output = subprocess.run(['dd','bd=4M','if=windows11.iso','of={0}'.format(USBDrive),'status=progress','oflag=sync'], capture_output=True)
+    output = subprocess.run(['sudo','dd','bd=4M','if=windows11.iso','of={0}'.format(USBDrive),'status=progress','oflag=sync'], capture_output=True)
     print(output.stdout)    
     print('ISO copied successfully.')
     # Unmount the USB drive
     print('Unmounting USB drive...')
-    subprocess.call(['umount', USBDrive])
+    subprocess.call(['sudo','umount', USBDrive])
     print('USB drive unmounted successfully.')
 
 class DownloadProgressBar(tqdm):
@@ -50,7 +50,6 @@ def download_url(url, output_path):
         urllib.request.urlretrieve(
             url, filename=output_path, reporthook=t.update_to)
 
-
 def CleanWorkspace():
     if os.path.isfile('windows11.iso'):
         os.remove('windows11.iso')
@@ -62,8 +61,12 @@ def DownloadWindows11():
     except Exception as e:
         print('Error downloading Windows11.iso \n' + str(e))
 
-
 if __name__ == '__main__':
+    # make sure ran as root
+    if os.geteuid() != 0:
+        print('This script must be run as root')
+        sys.exit(1)        
+
     print('Select USB drive to create a bootable USB of Windows 11 on:')
     print('-----------------------------------------')
     removable_drives = get_removable_drives_linux()
@@ -77,8 +80,17 @@ if __name__ == '__main__':
         if selection < len(removable_drives):
             USBDrive = removable_drives[selection]
             print('Selected USB drive: ' + USBDrive)
-            CleanWorkspace()
-            DownloadWindows11()
+            # if windows11.iso is not downloaded, download it
+            if not os.path.isfile('windows11.iso'):
+                DownloadWindows11()
+            else:
+                #ask if user wants to download windows11.iso again else continue
+                print('Windows 11 ISO already downloaded. Do you want to download it again? (y/n)')
+                selection = input()
+                if selection == 'y':
+                    # delete existing windows11.iso      
+                    CleanWorkspace()                                                              
+                    DownloadWindows11()\            
             create_bootable_usb_windows(USBDrive)
             print('Windows 11 bootable USB successfully created on ' + USBDrive)
         else:
