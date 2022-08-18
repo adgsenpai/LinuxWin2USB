@@ -64,13 +64,13 @@ def DownloadWindows11():
 
 
 if __name__ == '__main__':
-    print('Select USB drive to install Windows 11 on:')
+    print('Select USB drive to create a bootable USB of Windows 11 on:')
     print('-----------------------------------------')
     removable_drives = get_removable_drives_linux()
     for i, drive in enumerate(removable_drives):
         print(str(i) + ': ' + drive)
     print('-----------------------------------------')
-    print('Enter the number of the drive you want to install Windows 11 on:')
+    print('Enter the number of the drive you want to create a bootable USB of Windows 11 on:')
     selection = input()
     if selection.isdigit():
         selection = int(selection)
@@ -80,7 +80,7 @@ if __name__ == '__main__':
             CleanWorkspace()
             DownloadWindows11()
             create_bootable_usb_windows(USBDrive)
-            print('Windows 11 installed successfully on ' + USBDrive)
+            print('Windows 11 bootable USB successfully created on ' + USBDrive)
         else:
             print('Invalid selection')
     else:
