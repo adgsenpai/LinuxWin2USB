@@ -7,13 +7,13 @@ from tqdm import tqdm
 import subprocess
 
 def get_removable_drives_linux():
-    drives = []
-    for drive in os.listdir('/sys/block'):
-        if drive.startswith('sd'):
-            drives.append(drive)
-    return drives
-    
-
+    # get sd paths
+    usbdevices = []
+    for line in subprocess.check_output(['lsblk', '-o', 'NAME,MOUNTPOINT']).decode('utf-8').split('\n'):
+        if 'sd' in line:
+            usbdevices.append(line.split()[0])
+    return usbdevices
+        
 def create_bootable_usb_windows(USBDrive):
     # Create a new USB drive
     print('Creating USB drive...')
@@ -54,10 +54,6 @@ def download_url(url, output_path):
 def CleanWorkspace():
     if os.path.isfile('windows11.iso'):
         os.remove('windows11.iso')
-        return True
-    else:
-        return False
-
 
 def DownloadWindows11():
     try:
@@ -81,12 +77,10 @@ if __name__ == '__main__':
         if selection < len(removable_drives):
             USBDrive = removable_drives[selection]
             print('Selected USB drive: ' + USBDrive)
-            if CleanWorkspace():
-                DownloadWindows11()
-                create_bootable_usb_windows(USBDrive)
-                print('Windows 11 installed successfully on ' + USBDrive)
-            else:
-                print('Windows 11 is already installed on ' + USBDrive)
+            CleanWorkspace()
+            DownloadWindows11()
+            create_bootable_usb_windows(USBDrive)
+            print('Windows 11 installed successfully on ' + USBDrive)
         else:
             print('Invalid selection')
     else:
