@@ -24,14 +24,14 @@ def create_bootable_usb_windows(USBDrive):
     subprocess.call(['mount', USBDrive, '-t', 'ntfs', '-o', 'rw'])
     print('USB drive mounted successfully.')
     # Copy the ISO to the USB drive
-    print('Copying ISO to USB drive...')
-    subprocess.call(['cp', 'windows11.iso', USBDrive])
+    print('Copying ISO to USB drive...')    
+    output = subprocess.run(['dd','bd=4M','if=windows11.iso','of={0}'.format(USBDrive),'status=progress','oflag=sync'], capture_output=True)
+    print(output.stdout)    
     print('ISO copied successfully.')
     # Unmount the USB drive
     print('Unmounting USB drive...')
     subprocess.call(['umount', USBDrive])
     print('USB drive unmounted successfully.')
-
 
 class DownloadProgressBar(tqdm):
     def update_to(self, b=1, bsize=1, tsize=None):
