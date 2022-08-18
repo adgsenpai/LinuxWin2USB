@@ -17,7 +17,7 @@ def get_removable_drives_linux():
 def create_bootable_usb_windows(USBDrive):
     # Create a new USB drive
     print('Creating USB drive...')
-    subprocess.call(['sudo','mkfs.ntfs', '-F', '-I', '-L', 'Windows11', USBDrive])
+    subprocess.call(['sudo','mkfs.ntfs','-f', USBDrive])
     print('USB drive created successfully.')
     # Mount the USB drive
     print('Mounting USB drive...')
