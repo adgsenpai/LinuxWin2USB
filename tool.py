@@ -7,7 +7,12 @@ from tqdm import tqdm
 import subprocess
 
 def get_removable_drives_linux():
-    return ['/media/' + i for i in os.listdir('/media')]
+    drives = []
+    for drive in os.listdir('/sys/block'):
+        if drive.startswith('sd'):
+            drives.append(drive)
+    return drives
+    
 
 def create_bootable_usb_windows(USBDrive):
     # Create a new USB drive
