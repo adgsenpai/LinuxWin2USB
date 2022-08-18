@@ -18,8 +18,7 @@ def create_bootable_usb_windows(USBDrive):
     # Create a new USB drive
     print('Creating USB drive...')
     subprocess.call(['sudo','mkfs.ntfs','-f', USBDrive,'-F'])
-    output = subprocess.run(['sudo','dd','bs=4M','if=windows11.iso','of={0}'.format(USBDrive),'status=progress','oflag=sync'], capture_output=True)
-    print(output.stdout)    
+    subprocess.call(['sudo','dd','bs=4M','if=windows11.iso','of={0}'.format(USBDrive),'status=progress','oflag=sync'])
     print('ISO copied successfully.')
     # Unmount the USB drive
     print('Unmounting USB drive...')
