@@ -13,6 +13,8 @@ def get_removable_drives_linux():
         if 'sd' in line:
             usbdevices.append('/dev/'+line.split()[0])                            
     return usbdevices
+
+ 
         
 def create_bootable_usb_windows(USBDrive):
     # Create a new USB drive
@@ -21,7 +23,7 @@ def create_bootable_usb_windows(USBDrive):
     subprocess.call(['sudo','mkfs.ntfs','-f', USBDrive,'-F'])
     #clear output of console
     subprocess.call(['clear'])
-    print("Preparing to copy Windows 11 ISO to USB drive...")
+    print("Moving Windows 11 ISO to USB drive...")
     subprocess.call(['sudo','dd','bs=4M','if=windows11.iso','of={0}'.format(USBDrive),'status=progress','oflag=sync'])
     print('ISO copied successfully.')
     # Unmount the USB drive
@@ -68,6 +70,14 @@ if __name__ == '__main__':
         print('This script must be run as root')
         sys.exit(1)        
 
+    subprocess.call(['clear'])
+    print('Welcome to the Windows 11 ISO USB Tool.')
+    print('This tool will create a bootable Windows 11 ISO on a USB drive.')
+
+    print('Information on storage devices:')
+    print('---------------------------------')    
+    subprocess.call(['sudo','fdisk','-l'])
+    print('---------------------------------')
     print('Select USB drive to create a bootable USB of Windows 11 on:')
     print('-----------------------------------------')
     removable_drives = get_removable_drives_linux()
