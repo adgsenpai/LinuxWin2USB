@@ -62,6 +62,11 @@ def DownloadWindows11():
         print('Error downloading Windows11.iso \n' + str(e))
 
 if __name__ == '__main__':
+    # make sure we run this in linux
+    if os.name != 'posix':
+        print('This script must be run in linux.')
+        sys.exit(1)
+        
     # make sure ran as root
     if os.geteuid() != 0:
         print('This script must be run as root')
