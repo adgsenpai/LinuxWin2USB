@@ -17,10 +17,13 @@ def get_removable_drives_linux():
 def create_bootable_usb_windows(USBDrive):
     # Create a new USB drive
     print('Creating USB drive...')
-    subprocess.call(['sudo','mkfs.ntfs','-f', USBDrive])
+    subprocess.call(['sudo','mkfs.ntfs','-f', USBDrive,'-F'])
+    # mount USB drive
+    print('Mounting USB drive...')
+    subprocess.call(['sudo','mount','-t',USBDrive,'/windowsdisk'])        
     print('USB drive created successfully.')    
     print('Copying ISO to USB drive...')    
-    output = subprocess.run(['sudo','dd','bd=4M','if=windows11.iso','of={0}'.format(USBDrive),'status=progress','oflag=sync'], capture_output=True)
+    output = subprocess.run(['sudo','dd','bd=4M','if=windows11.iso','of=/windowsdisk','status=progress','oflag=sync'], capture_output=True)
     print(output.stdout)    
     print('ISO copied successfully.')
     # Unmount the USB drive
