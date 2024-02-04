@@ -27,6 +27,10 @@ Creates a bootable Windows 11 USB drive from a Linux system. It also downloads t
 
 `sudo python3 tool.py`
 
+or 
+
+`sudo ./tool`
+
 
 
 2. Follow all the prompts. You will be asked to select a USB drive. Your data will be destroyed on the device you choose and will be formatted as NTFS.

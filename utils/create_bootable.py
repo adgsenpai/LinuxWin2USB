@@ -13,7 +13,17 @@ def check_if_drive_exists(drive_path):
         return False
 
 
-def create_bootable_usb_windows(USBDrive):
+def check_if_os_exists(os_path):
+    if os.path.exists(os_path):
+        print("OS path verified")
+        return True
+    else:
+        print("OS does not exists.\
+              Please check and try again. or Download it manually")
+        return False
+
+
+def create_bootable_usb_windows(USBDrive, os_path='windows11.iso'):
     # check if drive exists
     if not check_if_drive_exists(USBDrive):
         exit(1)
@@ -25,11 +35,12 @@ def create_bootable_usb_windows(USBDrive):
     if result != 0:
         print("Error during Formatting. Are you sure you are root?")
         exit(1)
+
     # clear output of console
     subprocess.call(['clear'])
     print("Moving Windows 11 ISO to USB drive...")
     subprocess.call(
-        ['sudo', 'dd', 'bs=4M', 'if=windows11.iso', 'of={0}'.format(USBDrive), 'status=progress', 'oflag=sync'])
+        ['sudo', 'dd', 'bs=4M', f'if={os_path}', 'of={}'.format(USBDrive), 'status=progress', 'oflag=sync'])
     print('ISO copied successfully.')
     # Unmount the USB drive
     print('Unmounting USB drive...')
