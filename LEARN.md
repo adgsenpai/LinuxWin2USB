@@ -1,6 +1,7 @@
 # Learn: Creating a Bootable Windows 11 ISO on a USB Drive in Linux
 
-This guide explains how to create a bootable Windows 11 ISO on a USB drive using a Linux environment. The script provided requires Python and is designed to automate the process.
+This guide explains how to create a bootable Windows 11 ISO on a USB drive using a Linux environment. The script
+provided requires Python and is designed to automate the process.
 
 ## Prerequisites
 
@@ -24,7 +25,8 @@ The script performs the following tasks:
 
 3. **Download and Run the Script**: Copy the script into a `.py` file and execute it.
 
-4. **Follow On-Screen Instructions**: The script will guide you through selecting the USB drive and downloading the Windows 11 ISO.
+4. **Follow On-Screen Instructions**: The script will guide you through selecting the USB drive and downloading the
+   Windows 11 ISO.
 
 ## Important Notes
 
@@ -40,4 +42,6 @@ The script performs the following tasks:
 
 ## Conclusion
 
-This script is a handy tool for users familiar with Linux and Python, offering a straightforward way to create a bootable Windows 11 USB drive. Always handle root-level scripts with care and ensure backups of important data before proceeding.
+This script is a handy tool for users familiar with Linux and Python, offering a straightforward way to create a
+bootable Windows 11 USB drive. Always handle root-level scripts with care and ensure backups of important data before
+proceeding.

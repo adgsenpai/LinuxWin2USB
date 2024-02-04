@@ -91,7 +91,7 @@ def make_bootable():
     USBDrive = select_drive()
     os_path = select_os_path()
 
-    print("OS PATH",os_path)
+    print("OS PATH", os_path)
 
     if check_if_os_exists(os_path):
         create_bootable_usb_windows(USBDrive, os_path)
