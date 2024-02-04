@@ -6,24 +6,25 @@ import os
 def check_if_drive_exists(drive_path):
     if os.path.exists(drive_path):
         print("Drive path verified")
+        return True
     else:
         print("Drive does not exists.\
               Please check and try again")
-        return
+        return False
 
 
 def create_bootable_usb_windows(USBDrive):
     # check if drive exists
-    check_if_drive_exists(USBDrive)
-
+    if not check_if_drive_exists(USBDrive):
+        exit(1)
     # Create a new USB drive
     subprocess.call(['clear'])
     print('Formatting USB drive...')
     # formatting the usb drive
     result = subprocess.call(['sudo', 'mkfs.ntfs', '-f', USBDrive, '-F'])
     if result != 0:
-        print("Error during Formatting")
-        return
+        print("Error during Formatting. Are you sure you are root?")
+        exit(1)
     # clear output of console
     subprocess.call(['clear'])
     print("Moving Windows 11 ISO to USB drive...")
